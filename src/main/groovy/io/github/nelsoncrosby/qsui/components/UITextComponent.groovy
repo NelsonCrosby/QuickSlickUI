@@ -55,21 +55,28 @@ abstract class UITextComponent extends UIComponent {
 
         @Override
         T build() {
+            final Font defaultFont = new Graphics(0, 0).font
+
             if (inst.bounds == null) {
                 inst.bounds = new Rectangle(0, 0, 0, 0)
             }
+
             final int PADDING = 10 // TODO: Make this an attribute
+            int pad = 2*PADDING
             if (inst.textPos == null) {
                 inst.textPos = new Vector2f(PADDING, PADDING)
             }
-            if (inst.bounds.width == 0 || inst.bounds.height == 0) {
+
+            if (inst.bounds.width == 0) {
                 def font = inst.font
-                if (font == null)
-                    font = new Graphics(0, 0).font
+                if (font == null) font = defaultFont
                 float width = font.getWidth(inst.text)
-                float height = font.getHeight(inst.text)
-                int pad = 2*PADDING
                 inst.bounds.width = width + pad
+            }
+            if (inst.bounds.height == 0) {
+                def font = inst.font
+                if (font == null) font = defaultFont
+                float height = font.getHeight(inst.text)
                 inst.bounds.height = height + pad
             }
 
