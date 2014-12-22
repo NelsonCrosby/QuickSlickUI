@@ -2,46 +2,17 @@ package io.github.nelsoncrosby.qsui
 
 import io.github.nelsoncrosby.slickutil.GameComponent
 import io.github.nelsoncrosby.slickutil.PCInputListener
-import org.newdawn.slick.GameContainer
-import org.newdawn.slick.Graphics
-import org.newdawn.slick.Input
-import org.newdawn.slick.SlickException
-import org.newdawn.slick.state.StateBasedGame
+import org.newdawn.slick.*
+import org.newdawn.slick.geom.Rectangle
 
 /**
  *
  */
-class UIState implements PCInputListener, GameComponent {
-    List<UIComponent> components
-    UIComponent keyFocused
+abstract class UIComponent implements PCInputListener, GameComponent {
+    Rectangle bounds
 
-    /**
-     * Render this component
-     *
-     * @param gc The container holding the game
-     * @param game The game holding the current state
-     * @param gx The graphics context to render to
-     *
-     * @throws SlickException Indicates a failure to render an artifact
-     */
-    @Override
-    void render(GameContainer gc, StateBasedGame game, Graphics gx) throws SlickException {
-        components.each { it.render(gc, game, gx) }
-    }
-
-    /**
-     * Update this component
-     *
-     * @param gc The container holding the game
-     * @param game The game holding the current state
-     * @param delta The amount of time that has passed in milliseconds since last update
-     *
-     * @throws SlickException Indicates an internal error that will be reported through the
-     * standard framework mechanism
-     */
-    @Override
-    void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        components.each { it.update(gc, game, delta) }
+    UIComponent(Rectangle bounds) {
+        this.bounds = bounds
     }
 
     /**
@@ -52,9 +23,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void keyPressed(int key, char c) {
-        if (keyFocused != null) {
-            keyFocused.keyPressed(key, c)
-        }
+
     }
 
     /**
@@ -65,18 +34,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void keyReleased(int key, char c) {
-        if (keyFocused != null) {
-            keyFocused.keyReleased(key, c)
-        }
-    }
 
-    protected UIComponent mouseFocused() {
-        int mouseX = input.mouseX,
-                mouseY = input.mouseY
-        components.reverse().find {
-            mouseX >= it.bounds.x && mouseX <= it.bounds.maxX &&
-                    mouseY >= it.bounds.y && mouseY <= it.bounds.maxX
-        }
     }
 
     /**
@@ -86,7 +44,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseWheelMoved(int change) {
-        mouseFocused().mouseWheelMoved(change)
+
     }
 
     /**
@@ -103,7 +61,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseClicked(int button, int x, int y, int clickCount) {
-        mouseFocused().mouseClicked(button, x, y, clickCount)
+
     }
 
     /**
@@ -115,8 +73,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mousePressed(int button, int x, int y) {
-        keyFocused = mouseFocused()
-        mouseFocused().mousePressed(button, x, y)
+
     }
 
     /**
@@ -128,7 +85,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseReleased(int button, int x, int y) {
-        mouseFocused().mouseReleased(button, x, y)
+
     }
 
     /**
@@ -141,7 +98,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseMoved(int oldx, int oldy, int newx, int newy) {
-        mouseFocused().mouseMoved(oldx, oldy, newx, newy)
+
     }
 
     /**
@@ -154,7 +111,7 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseDragged(int oldx, int oldy, int newx, int newy) {
-        mouseFocused().mouseDragged(oldx, oldy, newx, newy)
+
     }
 
     /** The input instance sending events */
@@ -166,16 +123,14 @@ class UIState implements PCInputListener, GameComponent {
      * @return True if the input listener should recieve events
      */
     @Override
-    boolean isAcceptingInput() {
-        return true
-    }
+    abstract boolean isAcceptingInput()
 
     /**
      * Notification that all input events have been sent for this frame
      */
     @Override
     void inputEnded() {
-        components.each { it.inputEnded() }
+
     }
 
     /**
@@ -183,6 +138,6 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void inputStarted() {
-        components.each { it.inputStarted() }
+
     }
 }
