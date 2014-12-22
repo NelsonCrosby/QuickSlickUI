@@ -1,5 +1,6 @@
 package io.github.nelsoncrosby.qsui
 
+import io.github.nelsoncrosby.qsui.components.UIComponent
 import io.github.nelsoncrosby.slickutil.GameComponent
 import io.github.nelsoncrosby.slickutil.PCInputListener
 import org.newdawn.slick.GameContainer
@@ -90,7 +91,10 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseWheelMoved(int change) {
-        mouseFocused().mouseWheelMoved(change)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mouseWheelMoved(change)
+        }
     }
 
     /**
@@ -107,7 +111,10 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseClicked(int button, int x, int y, int clickCount) {
-        mouseFocused().mouseClicked(button, x, y, clickCount)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mouseClicked(button, x, y, clickCount)
+        }
     }
 
     /**
@@ -120,7 +127,10 @@ class UIState implements PCInputListener, GameComponent {
     @Override
     void mousePressed(int button, int x, int y) {
         keyFocused = mouseFocused()
-        mouseFocused().mousePressed(button, x, y)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mousePressed(button, x, y)
+        }
     }
 
     /**
@@ -132,7 +142,10 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseReleased(int button, int x, int y) {
-        mouseFocused().mouseReleased(button, x, y)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mouseReleased(button, x, y)
+        }
     }
 
     /**
@@ -145,7 +158,10 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseMoved(int oldx, int oldy, int newx, int newy) {
-        mouseFocused().mouseMoved(oldx, oldy, newx, newy)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mouseMoved(oldx, oldy, newx, newy)
+        }
     }
 
     /**
@@ -158,7 +174,10 @@ class UIState implements PCInputListener, GameComponent {
      */
     @Override
     void mouseDragged(int oldx, int oldy, int newx, int newy) {
-        mouseFocused().mouseDragged(oldx, oldy, newx, newy)
+        def focused = mouseFocused()
+        if (focused != null) {
+            focused.mouseDragged(oldx, oldy, newx, newy)
+        }
     }
 
     /** The input instance sending events */

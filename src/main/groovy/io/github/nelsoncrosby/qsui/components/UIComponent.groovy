@@ -1,4 +1,4 @@
-package io.github.nelsoncrosby.qsui
+package io.github.nelsoncrosby.qsui.components
 
 import io.github.nelsoncrosby.slickutil.GameComponent
 import io.github.nelsoncrosby.slickutil.PCInputListener
@@ -10,6 +10,8 @@ import org.newdawn.slick.geom.Rectangle
  */
 abstract class UIComponent implements PCInputListener, GameComponent {
     Rectangle bounds
+
+    UIComponent() {}
 
     UIComponent(Rectangle bounds) {
         this.bounds = bounds
@@ -139,5 +141,15 @@ abstract class UIComponent implements PCInputListener, GameComponent {
     @Override
     void inputStarted() {
 
+    }
+    /**
+     *
+     * @param < T >
+     */
+    abstract static class Builder<T extends UIComponent> extends io.github.nelsoncrosby.qsui.Builder<T> {
+        Builder<T> bounds(Rectangle bounds) {
+            inst.bounds = bounds
+            return this
+        }
     }
 }
