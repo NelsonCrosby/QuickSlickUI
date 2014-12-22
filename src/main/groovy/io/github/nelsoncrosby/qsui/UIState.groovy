@@ -15,6 +15,10 @@ class UIState implements PCInputListener, GameComponent {
     List<UIComponent> components
     UIComponent keyFocused
 
+    UIState(List<UIComponent> components) {
+        this.components = components
+    }
+
     /**
      * Render this component
      *
