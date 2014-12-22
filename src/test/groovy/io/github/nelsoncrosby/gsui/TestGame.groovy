@@ -1,14 +1,9 @@
 package io.github.nelsoncrosby.gsui
 
 import io.github.nelsoncrosby.qsui.UIState
-import io.github.nelsoncrosby.qsui.UIStateBuilder
+
 import io.github.nelsoncrosby.qsui.components.UIButton
-import org.newdawn.slick.AppGameContainer
-import org.newdawn.slick.BasicGame
-import org.newdawn.slick.GameContainer
-import org.newdawn.slick.Graphics
-import org.newdawn.slick.SlickException
-import org.newdawn.slick.geom.Rectangle
+import org.newdawn.slick.*
 
 /**
  *
@@ -27,12 +22,14 @@ class TestGame extends BasicGame {
 
     @Override
     void init(GameContainer gc) throws SlickException {
-        ui = new UIStateBuilder()
+        ui = new UIState.Builder()
                 .add(
                         new UIButton.Builder()
                                 .onClicked { println 'Hello, World!' }
+                                .bgColor(Color.blue)
                                 .text("Hello, World!")
-                                .bounds(new Rectangle(10, 10, 0, 0))
+                                .textColor(Color.white)
+                                .bounds(10, 10)
                                 .build()
                 )
                 .build()
@@ -43,12 +40,12 @@ class TestGame extends BasicGame {
 
     @Override
     void update(GameContainer gc, int delta) throws SlickException {
-        ui.update(gc, null, delta)
+        ui.update(gc, delta)
     }
 
     @Override
     void render(GameContainer gc, Graphics gx) throws SlickException {
-        ui.render(gc, null, gx)
+        ui.render(gc, gx)
     }
 
     static void main(String[] args) {

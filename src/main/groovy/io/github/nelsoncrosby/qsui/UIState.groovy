@@ -7,7 +7,6 @@ import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.Input
 import org.newdawn.slick.SlickException
-import org.newdawn.slick.state.StateBasedGame
 
 /**
  *
@@ -30,8 +29,8 @@ class UIState implements PCInputListener, GameComponent {
      * @throws SlickException Indicates a failure to render an artifact
      */
     @Override
-    void render(GameContainer gc, StateBasedGame game, Graphics gx) throws SlickException {
-        components.each { it.render(gc, game, gx) }
+    void render(GameContainer gc, Graphics gx) throws SlickException {
+        components.each { it.render(gc, gx) }
     }
 
     /**
@@ -45,8 +44,8 @@ class UIState implements PCInputListener, GameComponent {
      * standard framework mechanism
      */
     @Override
-    void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-        components.each { it.update(gc, game, delta) }
+    void update(GameContainer gc, int delta) throws SlickException {
+        components.each { it.update(gc, delta) }
     }
 
     /**
@@ -207,5 +206,25 @@ class UIState implements PCInputListener, GameComponent {
     @Override
     void inputStarted() {
         components.each { it.inputStarted() }
+    }
+
+    /**
+     *
+     */
+    static class Builder extends io.github.nelsoncrosby.qsui.Builder<UIState> {
+        @Override
+        protected UIState getNewInstance() {
+            return new UIState(new ArrayList<UIComponent>())
+        }
+
+        Builder add(UIComponent cmp) {
+            inst.components.add(cmp)
+            return this
+        }
+
+        Builder addAll(Collection<? extends UIComponent> c) {
+            inst.components.addAll(c)
+            return this
+        }
     }
 }

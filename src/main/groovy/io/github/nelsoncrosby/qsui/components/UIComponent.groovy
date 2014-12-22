@@ -142,6 +142,7 @@ abstract class UIComponent implements PCInputListener, GameComponent {
     void inputStarted() {
 
     }
+
     /**
      *
      * @param < T >
@@ -150,6 +151,9 @@ abstract class UIComponent implements PCInputListener, GameComponent {
         Builder<T> bounds(Rectangle bounds) {
             inst.bounds = bounds
             return this
+        }
+        Builder<T> bounds(float x, float y, float width = 0, float height = 0) {
+            return this.bounds(new Rectangle(x, y, width, height))
         }
     }
 }

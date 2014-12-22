@@ -1,42 +1,34 @@
 package io.github.nelsoncrosby.qsui.components
 
-import org.newdawn.slick.Font;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.*
+import org.newdawn.slick.geom.Rectangle
+import org.newdawn.slick.geom.Vector2f
 
 /**
  * A component that contains text
  */
 abstract class UITextComponent extends UIComponent {
+    String text
+    Color textColor
+    Vector2f textPos
+    Font font
+
     UITextComponent() {
     }
 
-    UITextComponent(Rectangle bounds, String text, Vector2f textPos) {
-        this(bounds, text, textPos, null);
-    }
-
-    UITextComponent(Rectangle bounds, String text, Vector2f textPos, Font font) {
-        super(bounds);
-        this.text = text;
-        this.textPos = textPos
-        this.font = font;
-    }
-
     @Override
-    void render(GameContainer gc, StateBasedGame game, Graphics gx) throws SlickException {
-        Font before = gx.font
+    void render(GameContainer gc, Graphics gx) throws SlickException {
+        Font fontBefore = gx.font
         if (font != null) gx.font = font
-        gx.drawString(text, bounds.x+textPos.x as float, bounds.y+textPos.y as float)
-        gx.font = before
-    }
 
-    String text;
-    Vector2f textPos;
-    Font font;
+        Color colorBefore = gx.color
+        if (textColor != null) gx.color = textColor
+
+        gx.drawString(text, bounds.x+textPos.x as float, bounds.y+textPos.y as float)
+
+        gx.font = fontBefore
+        gx.color = colorBefore
+    }
 
     /**
      *
@@ -44,6 +36,11 @@ abstract class UITextComponent extends UIComponent {
     static abstract class Builder<T extends UITextComponent> extends UIComponent.Builder<T> {
         Builder<T> text(String text) {
             inst.text = text
+            return this;
+        }
+
+        Builder<T> textColor(Color textColor) {
+            inst.textColor = textColor
             return this;
         }
 
