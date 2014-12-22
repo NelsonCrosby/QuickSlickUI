@@ -13,7 +13,7 @@ class UIButton extends UITextComponent {
     Closure onClicked
     Color bgColor
 
-    UIButton() {}
+    protected UIButton() {}
 
     @Override
     boolean isAcceptingInput() {

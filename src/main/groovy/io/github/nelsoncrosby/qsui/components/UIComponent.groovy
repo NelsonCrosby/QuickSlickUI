@@ -11,11 +11,7 @@ import org.newdawn.slick.geom.Rectangle
 abstract class UIComponent implements PCInputListener, GameComponent {
     Rectangle bounds
 
-    UIComponent() {}
-
-    UIComponent(Rectangle bounds) {
-        this.bounds = bounds
-    }
+    protected UIComponent() {}
 
     /**
      * Notification that a key was pressed

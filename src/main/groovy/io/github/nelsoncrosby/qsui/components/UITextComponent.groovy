@@ -13,8 +13,7 @@ abstract class UITextComponent extends UIComponent {
     Vector2f textPos
     Font font
 
-    UITextComponent() {
-    }
+    protected UITextComponent() {}
 
     @Override
     void render(GameContainer gc, Graphics gx) throws SlickException {
