@@ -30,6 +30,7 @@ class TestGame extends BasicGame {
         ui = new UIStateBuilder()
                 .add(
                         new UIButton.Builder()
+                                .onClicked { println 'Hello, World!' }
                                 .text("Hello, World!")
                                 .bounds(new Rectangle(10, 10, 0, 0))
                                 .build()

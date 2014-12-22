@@ -13,12 +13,19 @@ import org.newdawn.slick.state.StateBasedGame
  * A component that contains text
  */
 class UIButton extends UITextComponent {
+    Closure onClicked
 
     UIButton() {}
 
     @Override
     boolean isAcceptingInput() {
-        return false
+        return true
+    }
+
+    @Override
+    void mouseClicked(int button, int x, int y, int clickCount) {
+        if (button == 0)
+            onClicked.call(clickCount)
     }
 
     UIButton(Rectangle bounds, String text) {
@@ -41,10 +48,16 @@ class UIButton extends UITextComponent {
         gx.color = Color.white
         super.render(gc, game, gx)
     }
+
     /**
      *
      */
     static class Builder extends UITextComponent.Builder<UIButton> {
+        Builder onClicked(Closure action) {
+            inst.onClicked = action
+            return this
+        }
+
         @Override
         protected UIButton getNewInstance() {
             return new UIButton()
