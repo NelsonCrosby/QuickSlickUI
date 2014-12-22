@@ -27,6 +27,9 @@ class TestGame extends BasicGame {
                         new UIButton.Builder()
                                 .onClicked { println 'Hello, World!' }
                                 .bgColor(Color.blue)
+                                .render { Graphics gx ->
+                                    gx.fillRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 10)
+                                }
                                 .text("Hello, World!")
                                 .textColor(Color.white)
                                 .bounds(10, 10)

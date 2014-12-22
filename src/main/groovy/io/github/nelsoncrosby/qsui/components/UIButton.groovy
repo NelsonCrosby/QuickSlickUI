@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException
  */
 class UIButton extends UITextComponent {
     Closure onClicked
+    Closure render
     Color bgColor
 
     protected UIButton() {}
@@ -36,10 +37,15 @@ class UIButton extends UITextComponent {
         Color colorBefore = gx.color
         if (bgColor != null) gx.color = bgColor
 
-        gx.fill(bounds)
-        super.render(gc, gx)
+        if (render == null) {
+            gx.fill(bounds)
+        } else {
+            render.call(gx)
+        }
 
         gx.color = colorBefore
+
+        super.render(gc, gx)
     }
 
     /**
@@ -56,9 +62,21 @@ class UIButton extends UITextComponent {
             return this
         }
 
+        Builder render(Closure render) {
+            inst.render = render
+            return this
+        }
+
         @Override
         protected UIButton getNewInstance() {
             return new UIButton()
+        }
+
+        @Override
+        UIButton build() {
+            inst.render.delegate = inst
+
+            return super.build() as UIButton
         }
     }
 }
