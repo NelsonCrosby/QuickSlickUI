@@ -121,7 +121,9 @@ abstract class UIComponent implements PCInputListener, GameComponent {
      * @return True if the input listener should recieve events
      */
     @Override
-    abstract boolean isAcceptingInput()
+    boolean isAcceptingInput() {
+        return false
+    }
 
     /**
      * Notification that all input events have been sent for this frame

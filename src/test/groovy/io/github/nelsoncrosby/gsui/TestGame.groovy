@@ -3,6 +3,7 @@ package io.github.nelsoncrosby.gsui
 import io.github.nelsoncrosby.qsui.UIState
 
 import io.github.nelsoncrosby.qsui.components.UIButton
+import io.github.nelsoncrosby.qsui.components.UIImage
 import org.newdawn.slick.*
 
 /**
@@ -24,11 +25,18 @@ class TestGame extends BasicGame {
     void init(GameContainer gc) throws SlickException {
         ui = new UIState.Builder()
                 .add(
+                        new UIImage.Builder()
+                                .image(getClass(), 'testimage.png')
+                                .crop(30, 30, 100, 100)
+                                .bounds(10, 10)
+                                .build()
+                )
+                .add(
                         new UIButton.Builder()
                                 .onClicked { println 'Hello, World!' }
                                 .bgColor(Color.blue)
                                 .render { Graphics gx ->
-                                    gx.fillRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 10)
+                                    gx.drawRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 10)
                                 }
                                 .text("Hello, World!")
                                 .textColor(Color.white)
